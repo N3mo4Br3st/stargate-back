@@ -3,8 +3,10 @@ package stargateBack.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import stargateBack.mock.Values;
 import stargateBack.model.Bandeau;
 import stargateBack.model.Led;
+import stargateBack.model.Porte;
 
 @Component
 public class BandeauBusiness {
@@ -12,12 +14,16 @@ public class BandeauBusiness {
 	@Autowired
 	public BandeauBusiness() {}
 	
-	public Bandeau getBandeauById(Integer bandeauId) {
+  public Bandeau getBandeauById(Integer porteId, Integer bandeauId) {
 		
-    	Bandeau response = new Bandeau();
-    	response.setId(bandeauId);
-    	response.setName("Bandeau"+bandeauId);
-    	response.addLedsItem(new Led(0,0,0,0,255));
+    Bandeau response = null;
+    Porte porte = Values.getInstance().getPorteList().get(porteId);
+
+    if (porte != null) {
+
+      response = porte.getBandeaux().get(bandeauId);
+    }
+
 		return response;
 		
 		

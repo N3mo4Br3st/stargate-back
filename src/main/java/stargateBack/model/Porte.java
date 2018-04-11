@@ -77,11 +77,11 @@ public class Porte   {
     return this;
   }
 
-  public Porte addBandeauxItem(Bandeau bandeauxItem) {
+  public Porte addBandeauxItem(Integer index, Bandeau bandeauxItem) {
     if (this.bandeaux == null) {
       this.bandeaux = new ArrayList<Bandeau>();
     }
-    this.bandeaux.add(bandeauxItem);
+    this.bandeaux.add(index, bandeauxItem);
     return this;
   }
 

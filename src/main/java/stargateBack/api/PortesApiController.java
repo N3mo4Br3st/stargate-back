@@ -45,7 +45,7 @@ public class PortesApiController implements PortesApi {
 
     	
     	
-        return new ResponseEntity<Bandeau>(bandeauBusiness.getBandeauById(bandeauId),HttpStatus.OK);
+    return new ResponseEntity<Bandeau>(bandeauBusiness.getBandeauById(porteId, bandeauId), HttpStatus.OK);
     }
 
     public ResponseEntity<List<Bandeau>> getBandeaux(@ApiParam(value = "ID de la porte à retourner",required=true ) @PathVariable("porteId") Integer porteId) {

@@ -4,122 +4,165 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import stargateBack.dao.bean.ColorLed;
 public class ArduinoDAOImpl extends Thread implements ArduinoDAO  {
-	
-	 void connect ( String portName ) throws Exception
-	    {
-	        CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
-	        if ( portIdentifier.isCurrentlyOwned() )
-	        {
-	            System.out.println("Error: Port is currently in use");
-	        }
-	        else
-	        {
-	            CommPort commPort = portIdentifier.open(this.getClass().getName(),2000);
-	            
-	            if ( commPort instanceof SerialPort )
-	            {
-	                SerialPort serialPort = (SerialPort) commPort;
-	                serialPort.setSerialPortParams(57600,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
-	                
-	                InputStream in = serialPort.getInputStream();
-	                OutputStream out = serialPort.getOutputStream();
-	                               
-	                (new Thread(new SerialWriter(out))).start();
-	                
-	                serialPort.addEventListener(new SerialReader(in));
-	                serialPort.notifyOnDataAvailable(true);
 
-	            }
-	            else
-	            {
-	                System.out.println("Error: Only serial ports are handled by this example.");
-	            }
-	        }     
-	    }
-	    
-	    /**
-	     * Handles the input coming from the serial port. A new line character
-	     * is treated as the end of a block in this example. 
-	     */
-	    public static class SerialReader implements SerialPortEventListener 
-	    {
-	        private InputStream in;
-	        private byte[] buffer = new byte[1024];
-	        
-	        public SerialReader ( InputStream in )
-	        {
-	            this.in = in;
-	        }
-	        
-	    	public void serialEvent(SerialPortEvent event) {
-	    		//gestion des événements sur le port :
-	    		//on ne fait rien sauf quand les données sont disponibles
-	    		switch (event.getEventType()) {
-	    			case SerialPortEvent.BI :
-	    			case SerialPortEvent.OE :
-	    			case SerialPortEvent.FE :
-	    			case SerialPortEvent.PE :
-	    			case SerialPortEvent.CD :
-	    			case SerialPortEvent.CTS :	
-	    			case SerialPortEvent.DSR :
-	    			case SerialPortEvent.RI :
-	    			case SerialPortEvent.OUTPUT_BUFFER_EMPTY :
-	    				break;
-	    			case SerialPortEvent.DATA_AVAILABLE :
-	    				String codeBarre = new String(); 
-//	    				try {
-//	    					//lecture du buffer et affichage
-////	    					codeBarre = (String) in.readLine();
-////	    					System.out.println(codeBarre);
-//	    				} catch (IOException e) {
-//	    				}
-	    				break;
-	    		}
-	    	}
+  // pas utilise pour le moment cf ArduinoCommunication
+  @Override
+  public Boolean connect(String port) {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
-	    }
+  @Override
+  public Boolean raz(Integer bandeau, List<Integer> listIdLeds) {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
-	    /** */
-	    public static class SerialWriter implements Runnable 
-	    {
-	        OutputStream out;
-	        
-	        public SerialWriter ( OutputStream out )
-	        {
-	            this.out = out;
-	        }
-	        
-	        public void run ()
-	        {
-	            try
-	            {                
-	                int c = 0;
-	                while ( ( c = System.in.read()) > -1 )
-	                {
-	                    this.out.write(c);
-	                }                
-	            }
-	            catch ( IOException e )
-	            {
-	                e.printStackTrace();
-	                System.exit(-1);
-	            }            
-	        }
-	    }
-   
-	@Override
-	public Integer getConfigVersion() {
-	
-		return null;
-	}
+  @Override
+  public Boolean programmerCouleur(Integer bandeau, Integer rouge, Integer vert, Integer bleu, List<Integer> listIdLeds) {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
+  @Override
+  public Boolean profilHorizon(List<ColorLed> profil) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Boolean afficherProgrammation() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Boolean activationChevron(Integer chevron, Integer glyph) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Boolean activationHorizon(String profilCouleur) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  // Boolean connect(String portName) throws Exception
+  // {
+  // CommPortIdentifier portIdentifier =
+  // CommPortIdentifier.getPortIdentifier(portName);
+  // if ( portIdentifier.isCurrentlyOwned() )
+  // {
+  // System.out.println("Error: Port is currently in use");
+  // }
+  // else
+  // {
+  // CommPort commPort = portIdentifier.open(this.getClass().getName(),2000);
+  //
+  // if ( commPort instanceof SerialPort )
+  // {
+  // SerialPort serialPort = (SerialPort) commPort;
+  // serialPort.setSerialPortParams(57600,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
+  //
+  // InputStream in = serialPort.getInputStream();
+  // OutputStream out = serialPort.getOutputStream();
+  //
+  // (new Thread(new SerialWriter(out))).start();
+  //
+  // serialPort.addEventListener(new SerialReader(in));
+  // serialPort.notifyOnDataAvailable(true);
+  //
+  // }
+  // else
+  // {
+  // System.out.println("Error: Only serial ports are handled by this
+  // example.");
+  // }
+  // }
+  // return true;
+  // }
+  //
+  // /**
+  // * Handles the input coming from the serial port. A new line character
+  // * is treated as the end of a block in this example.
+  // */
+  // public static class SerialReader implements SerialPortEventListener
+  // {
+  // private InputStream in;
+  // private byte[] buffer = new byte[1024];
+  //
+  // public SerialReader ( InputStream in )
+  // {
+  // this.in = in;
+  // }
+  //
+  // public void serialEvent(SerialPortEvent event) {
+  // //gestion des événements sur le port :
+  // //on ne fait rien sauf quand les données sont disponibles
+  // switch (event.getEventType()) {
+  // case SerialPortEvent.BI :
+  // case SerialPortEvent.OE :
+  // case SerialPortEvent.FE :
+  // case SerialPortEvent.PE :
+  // case SerialPortEvent.CD :
+  // case SerialPortEvent.CTS :
+  // case SerialPortEvent.DSR :
+  // case SerialPortEvent.RI :
+  // case SerialPortEvent.OUTPUT_BUFFER_EMPTY :
+  // break;
+  // case SerialPortEvent.DATA_AVAILABLE :
+  // String codeBarre = new String();
+  //// try {
+  //// //lecture du buffer et affichage
+  ////// codeBarre = (String) in.readLine();
+  ////// System.out.println(codeBarre);
+  //// } catch (IOException e) {
+  //// }
+  // break;
+  // }
+  // }
+  //
+  // }
+  //
+  // /** */
+  // public static class SerialWriter implements Runnable
+  // {
+  // OutputStream out;
+  //
+  // public SerialWriter ( OutputStream out )
+  // {
+  // this.out = out;
+  // }
+  //
+  // public void run ()
+  // {
+  // try
+  // {
+  // int c = 0;
+  // while ( ( c = System.in.read()) > -1 )
+  // {
+  // this.out.write(c);
+  // }
+  // }
+  // catch ( IOException e )
+  // {
+  // e.printStackTrace();
+  // System.exit(-1);
+  // }
+  // }
+  // }
+  //
+  //
 
 //	/**
 //	 * Constructeur qui récupère l'identifiant du port et lance l'ouverture.

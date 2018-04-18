@@ -80,29 +80,34 @@ public class RxtxConnection {
 
 	private final Collection<RxtxInputListener> rxtxInputLIstener = new ArrayList<RxtxInputListener>();
 
-	private RxtxConnection() throws PortInUseException, UnsupportedCommOperationException, IOException {
-	}
+  // private RxtxConnection() throws PortInUseException,
+  // UnsupportedCommOperationException, IOException {
+  // }
 
-	public static synchronized RxtxConnection getInstance()
-			throws PortInUseException, UnsupportedCommOperationException, IOException {
+  public RxtxConnection(String testPort) throws PortInUseException, UnsupportedCommOperationException, IOException, PortNotFoundException {
+    initialize(testPort);
+  }
 
-		try {
-			if (instance == null) {
-				instance = new RxtxConnection();
-				instance.initialize();
-				logger.debug("Connection initialized");
-			}
-			return instance;
-		} catch (PortNotFoundException e) {
-			instance = null;
-			return new RxtxConnection();
-		}
+  // public static synchronized RxtxConnection getInstance()
+  // throws PortInUseException, UnsupportedCommOperationException, IOException {
+  //
+  // try {
+  // if (instance == null) {
+  // instance = new RxtxConnection();
+  // instance.initialize();
+  // logger.debug("Connection initialized");
+  // }
+  // return instance;
+  // } catch (PortNotFoundException e) {
+  // instance = null;
+  // return new RxtxConnection();
+  // }
+  //
+  // }
 
-	}
-
-	private void initialize()
+  private void initialize(String testPort)
 			throws PortInUseException, UnsupportedCommOperationException, IOException, PortNotFoundException {
-		String testPort = System.getProperty("xwot.test.port");
+    // String testPort = System.getProperty("xwot.test.port");
 		gson = new Gson();
 		logger.debug(testPort);
 		if (testPort != null && !testPort.equals("")) {

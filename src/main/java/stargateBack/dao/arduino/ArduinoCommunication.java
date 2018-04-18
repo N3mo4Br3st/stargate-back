@@ -9,9 +9,13 @@ import com.google.gson.reflect.TypeToken;
 import gnu.io.PortInUseException; 
 import gnu.io.SerialPortEvent; 
 import gnu.io.SerialPortEventListener; 
-import gnu.io.UnsupportedCommOperationException; 
+import gnu.io.UnsupportedCommOperationException;
+import stargateBack.dao.bean.ColorLed;
+import stargateBack.utils.PortNotFoundException;
+
 import java.io.IOException; 
-import java.lang.reflect.Type; 
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Map; 
 import java.util.TooManyListenersException; 
 import java.util.logging.Level; 
@@ -19,7 +23,7 @@ import java.util.logging.Logger;
 import org.slf4j.LoggerFactory; 
  
 
-public class ArduinoCommunication { 
+public class ArduinoCommunication implements ArduinoDAO {
  
     private RxtxConnection connection; 
     private final Gson gson; 
@@ -27,15 +31,26 @@ public class ArduinoCommunication {
  
     public ArduinoCommunication() { 
         gson = new Gson(); 
-        try { 
-            connection = RxtxConnection.getInstance(); 
-        } catch (PortInUseException ex) { 
-            Logger.getLogger(ArduinoCommunication.class.getName()).log(Level.SEVERE, null, ex); 
-        } catch (UnsupportedCommOperationException ex) { 
-            Logger.getLogger(ArduinoCommunication.class.getName()).log(Level.SEVERE, null, ex); 
-        } catch (IOException ex) { 
-            Logger.getLogger(ArduinoCommunication.class.getName()).log(Level.SEVERE, null, ex); 
-        } 
+
+  }
+
+  @Override
+  public Boolean connect(String port) {
+    try {
+      connection = new RxtxConnection(port);
+    } catch (PortInUseException ex) {
+      Logger.getLogger(ArduinoCommunication.class.getName()).log(Level.SEVERE, null, ex);
+      return false;
+    } catch (UnsupportedCommOperationException ex) {
+      Logger.getLogger(ArduinoCommunication.class.getName()).log(Level.SEVERE, null, ex);
+      return false;
+    } catch (IOException ex) {
+      Logger.getLogger(ArduinoCommunication.class.getName()).log(Level.SEVERE, null, ex);
+      return false;
+    } catch (PortNotFoundException e) {
+      return false;
+    }
+    return true;
     } 
  
     public void write(JsonObject o) { 
@@ -76,6 +91,42 @@ public class ArduinoCommunication {
  
     public Gson getGson() { 
         return gson; 
-    } 
+  }
+
+  @Override
+  public Boolean raz(Integer bandeau, List<Integer> listIdLeds) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Boolean programmerCouleur(Integer bandeau, Integer rouge, Integer vert, Integer bleu, List<Integer> listIdLeds) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Boolean profilHorizon(List<ColorLed> profil) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Boolean afficherProgrammation() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Boolean activationChevron(Integer chevron, Integer glyph) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Boolean activationHorizon(String profilCouleur) {
+    // TODO Auto-generated method stub
+    return null;
+  }
  
 }
